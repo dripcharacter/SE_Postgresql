@@ -1,5 +1,6 @@
 from database_CRUD import CRUD
 from sunburst_chart import sunburst, json_to_list, json_data
+import matplotlib.pyplot as plt
 import json
 import uuid
 
@@ -13,6 +14,10 @@ if __name__=="__main__":
     result=db.readDB(schema='public', table='se_table', column='*')
     print(result[0][4])
     print(type(result[0][4]))
+    result=json_to_list(result[0][4])
+    sunburst(result)
+    plt.show()
+
 
 #TODO: updateDB를 할때 자동으로 last_modified_time을 now()로 업데이트하도록하는 것
 #TODO: insertDB, updateDB, deleteDB를 할 때 그에 따른 scaproperty를 기반으로 한 sunburst chart를 생성 및 저장할 db_table 생성 및 앞의 3 작업을 할 때 자동으로 업데이트 하도록 하기
