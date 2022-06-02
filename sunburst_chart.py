@@ -236,6 +236,30 @@ json_data = {
     "value": 80
 }
 
+json_fake = {
+    "name": "NUTTY/COCOA",
+    "children": [
+        {
+            "name": "COCOA",
+            "children": [
+                {"name": "DARK CHOCOLATE", "value": 1},
+                {"name": "CHOCOLATE", "value": 1}
+            ],
+            "value": 2
+        },
+        {
+            "name": "NUTTY",
+            "children": [
+                {"name": "ALMOND", "value": 1},
+                {"name": "HAZELNUT", "value": 1},
+                {"name": "PEANUTS", "value": 1}
+            ],
+            "value": 3
+        }
+    ],
+    "value": 5
+}
+
 
 def sunburst(nodes, total=np.pi * 2, offset=0, level=0, ax=None):
     ax = ax or plt.subplot(111, projection='polar')
@@ -280,15 +304,11 @@ def json_to_list(json_dict, level=0):
     try:
         for children_dict in json_dict['children']:
             tmp = json_to_list(children_dict, level=level + 1)
-            # print('---------------------------------')
-            # print(tmp)
             children_list.append(tmp)
     except KeyError:
         return (json_dict['name'], json_dict['value'], [])
     result_list.append((json_dict['name'], json_dict['value'], children_list))
 
-    # print('------------------------------------')
-    # print(result_list)
     if level == 0:
         return result_list
     else:
