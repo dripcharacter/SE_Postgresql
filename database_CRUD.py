@@ -1,10 +1,8 @@
 import psycopg2
-
 from database import PostgreSQL_Database as Postgres_DB
 from sunburst_chart import sunburst, json_to_list
 import matplotlib.pyplot as plt
 import os
-import sys
 
 
 class CRUD(Postgres_DB):
@@ -88,13 +86,16 @@ class SCACRUD(CRUD):
             if os.path.isfile(filename):
                 os.remove(filename)
             plt.clf()
-            print('insertSCA finished')
+        print('insertSCA finished')
 
     def readSCAImage(self, user_name, slug, column='image', condition=None, schema='public', table='se_image_table'):
-        image_data=bytes(self.readDB(schema=schema, table=table, column=column, condition='''slug=\'{slug}\' AND user_name=\'{user_name}\''''.format(slug=slug, user_name=user_name))[0][0])
-        fout=None
-        filename='./' + slug + '.png'
-        fout=open(filename, 'wb')
+        image_data = bytes(self.readDB(schema=schema, table=table, column=column,
+                                       condition='''slug=\'{slug}\' AND user_name=\'{user_name}\''''.format(slug=slug,
+                                                                                                            user_name=user_name))[
+                               0][0])
+        fout = None
+        filename = './' + slug + '.png'
+        fout = open(filename, 'wb')
         fout.write(image_data)
         fout.close()
         print('readSCAImage finished')
@@ -120,17 +121,22 @@ class SCACRUD(CRUD):
             filename = './' + slug + '.png'
             pngfile = open(filename, 'rb')
             pngfiledata = psycopg2.Binary(pngfile.read())
-            self.updateDB(schema=schema, table='se_image_table', column='image', value='''{image}'''.format(image=pngfiledata), condition='''slug=\'{slug}\' AND user_name=\'{user_name}\''''.format(slug=slug, user_name=user_name))
+            self.updateDB(schema=schema, table='se_image_table', column='image',
+                          value='''{image}'''.format(image=pngfiledata),
+                          condition='''slug=\'{slug}\' AND user_name=\'{user_name}\''''.format(slug=slug,
+                                                                                               user_name=user_name))
             pngfile.close()
             if os.path.isfile(filename):
                 os.remove(filename)
             plt.clf()
-            print('updateSCA finished')
+        print('updateSCA finished')
 
     def deleteSCA(self, condition, schema='public', table='se_table'):
-        tmp=self.readDB(schema=schema, table=table, column='uuid, user_name', condition=condition)
-        wanted_uuid=tmp[0][0]
-        wanted_user_name=tmp[0][1]
+        tmp = self.readDB(schema=schema, table=table, column='uuid, user_name', condition=condition)
+        wanted_uuid = tmp[0][0]
+        wanted_user_name = tmp[0][1]
         self.deleteDB(schema=schema, table=table, condition=condition)
-        self.deleteDB(schema=schema, table=table, condition='''slug=\'{slug}\' AND user_name=\'{user_name}\''''.format(slug=wanted_user_name+'-'+wanted_uuid[:8], user_name=wanted_user_name))
+        self.deleteDB(schema=schema, table='se_image_table',
+                      condition='''slug=\'{slug}\' AND user_name=\'{user_name}\''''.format(
+                          slug=wanted_user_name + '-' + wanted_uuid[:8], user_name=wanted_user_name))
         print('deleteSCA finished')
