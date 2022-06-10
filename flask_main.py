@@ -1,10 +1,15 @@
+import matplotlib
+
+matplotlib.use('Agg')
 from flask import Flask, request, send_file
 from flask_restx import Resource, Api
+from flask_cors import CORS
 from database_CRUD import SCACRUD
 import os
 import json
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 
