@@ -1,28 +1,11 @@
-from database_CRUD import CRUD, SCACRUD
-from sunburst_chart import sunburst, json_to_list, json_data, json_fake
+from database_CRUD import SCACRUD
+from sunburst_chart import sunburst, json_to_list
 import matplotlib.pyplot as plt
 import json
 import uuid
 import os
 
 if __name__ == "__main__":
-    # db = CRUD()
-    # print(db.readDB(schema='public', table='se_table', column='scaproperty, sweettaste, sourtaste', condition='id=2'))
-    # db.updateDB(schema='public', table='se_table', column='sweettaste, sourtaste, bittertaste', value='30, 40, 50', condition='id>=1')
-    # print(db.readDB(schema='public', table='se_table', column='*'))
-    # db.deleteDB(schema='public', table='se_table', condition='id=10')
-
-    # db.insertDB(schema='public', table='se_table',
-    #             column='uuid, sweettaste, sourtaste, bittertaste, saltytaste, user_name, bean_name, scaproperty',
-    #             data='''\'{uuid}\', \'{sweettaste}\', \'{sourtaste}\', \'{bittertaste}\', \'{saltytaste}\',
-    #             \'{user_name}\', \'{bean_name}\', \'{scaproperty}\''''.format(
-    #                 uuid=uuid.uuid4(), sweettaste=76, sourtaste=53, bittertaste=46, saltytaste=11, user_name="mashiro",
-    #                 bean_name="test_bean", scaproperty=json.dumps(json_data)))
-    # db.updateDB(schema='public', table='se_table', column='sweettaste, sourtaste, bittertaste', value='30, 40, 50',
-    #             condition='table_pk<=1')
-    # result = db.readDB(schema='public', table='se_table', column='scaproperty',
-    #                    condition='''table_pk=1 AND user_name=\'mashiro\'''')
-
     sca_db = SCACRUD()
     tmp_uuid = str(uuid.uuid4())
     print(tmp_uuid)
