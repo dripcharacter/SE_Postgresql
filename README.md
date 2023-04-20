@@ -4,7 +4,7 @@
 
 ### This repo is subrepo for CIT(Coffee It Yourself). This repo is implementing data processing from JSON coffee taste data to sunburst chart image.
 
-![project_description](./process_json_to_sunburst.png)
+![project_description](./process_json_to_sunburst.PNG)
 
 ### Like this image, if backend server receives JSON data, first insert it to PostgreSQL container with little processing. After insert, if necessary, convert JSON to sunburst and insert it to PostgreSQL container. If all process was success, return 200 with inserted JSON data.
 
